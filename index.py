@@ -4,6 +4,7 @@ from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import MySQLdb
+import re
 from MySQLdb import IntegrityError
 
 # Models:
@@ -21,7 +22,9 @@ app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', '')
 app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'Flowthes')
 
 # Clave secreta con variable de entorno para mayor seguridad
-app.secret_key = os.getenv('FLASK_SECRET_KEY', 'defaultsecretkey')
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
+if not app.secret_key:
+    raise ValueError("La variable de entorno FLASK_SECRET_KEY no está configurada")
 
 mysql = MySQL(app)
 
@@ -46,12 +49,9 @@ def login():
         user = User(0, request.form['correo'], request.form['contraseña'])
         logged_user = ModelUser.login(mysql, user)
 
-        if logged_user is not None:
-            if check_password_hash(logged_user.Contraseña, user.contraseña):
-                login_user(logged_user)
-                return redirect(url_for('home'))
-            else:
-                flash('Contraseña incorrecta')
+        if logged_user is not None and check_password_hash(logged_user.Contraseña, user.contraseña):
+            login_user(logged_user)
+            return redirect(url_for('home'))
         else:
             flash('Usuario o Contraseña no encontrados')
 
@@ -107,6 +107,16 @@ def registro():
             flash('Todos los campos son obligatorios')
             return render_template('registro.html')
 
+        # Validación de correo electrónico
+        if not re.match(r"[^@]+@[^@]+\.[^@]+", correo):
+            flash('Correo electrónico inválido')
+            return render_template('registro.html')
+
+        # Validación de contraseña (mínimo 8 caracteres)
+        if len(contraseña) < 8:
+            flash('La contraseña debe tener al menos 8 caracteres')
+            return render_template('registro.html')
+
         hashed_password = generate_password_hash(contraseña)
 
         try:
@@ -120,10 +130,12 @@ def registro():
             flash('Error de integridad: clave duplicada o datos incorrectos.')
         except MySQLdb.Error as e:
             mysql.connection.rollback()
-            flash(f'Error de base de datos: {e}')
+            app.logger.error(f"Error de base de datos: {e}")
+            flash("Ha ocurrido un error al procesar la solicitud.")
         except Exception as e:
             mysql.connection.rollback()
-            flash(f'Error desconocido: {e}')
+            app.logger.error(f"Error desconocido: {e}")
+            flash("Ha ocurrido un error inesperado.")
 
         return redirect(url_for('login'))
 
@@ -169,10 +181,12 @@ def guardar_producto():
             flash('Producto registrado correctamente')
         except MySQLdb.Error as e:
             mysql.connection.rollback()
-            flash(f'Error de base de datos: {e}')
+            app.logger.error(f"Error de base de datos: {e}")
+            flash('Error de base de datos: Por favor, intenta nuevamente.')
         except Exception as e:
             mysql.connection.rollback()
-            flash(f'Error desconocido: {e}')
+            app.logger.error(f"Error desconocido: {e}")
+            flash('Error desconocido. Intenta nuevamente.')
 
         return redirect(url_for('registrar_producto'))
 
