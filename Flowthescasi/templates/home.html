@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock estilos %}
+
+{% block body %}
+<div class="header">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='img/logo2.png') }}" alt="Logo de Flowthes" class="logo">
+    </div>
+    <div class="nav">
+        <a href="{{ url_for('registrar_producto')}}">Registrar Producto</a>
+        <a href="#">Estado de Envíos</a> 
+    </div>
+    <a class="btn btn-secondary" href="{{ url_for('logout') }}">Cerrar Sesión</a>
+    
+</div>
+
+<!-- Barra de Filtro -->
+<div class="filter-bar">
+    <label for="precio-min">Filtrar:</label>
+    <input type="number" id="precio-min" placeholder="Precio Mínimo">
+    <input type="number" id="precio-max" placeholder="Precio Máximo">
+    <select id="talla">
+        <option value="" disabled selected>Talla</option>
+        <option value="s">S</option>
+        <option value="m">M</option>
+        <option value="l">L</option>
+    </select>
+    <select id="material">
+        <option value="" disabled selected>Material</option>
+        <option value="algodon">Algodón</option>
+        <option value="poliester">Poliéster</option>
+    </select>
+    <select id="publico">
+        <option value="" disabled selected>Público</option>
+        <option value="hombres">Hombres</option>
+        <option value="mujeres">Mujeres</option>
+    </select>
+    <a class="cart-icon" href="{{ url_for('carrito')}}">🛒</a>
+</div>
+
+
+<!-- Grid de Productos -->
+<div class="product-grid">
+    <div class="producto-card">
+        <img src="{{ url_for('static', filename='img/camisabudberry.jpg') }}">
+        <div class="producto-info">
+          <p>Camisa Budberry</p>
+          <p class="producto-precio">$308.000</p>
+        </div>
+        <a href="{{ url_for('detalle_producto')}}"><button  class="ver-producto-btn">Ver Producto</button></a>
+       
+      </div>
+      <div class="producto-card">
+        <img src="{{ url_for('static', filename='img/camisaboss.jpg') }}">
+        <div class="producto-info">
+          <p>Camisa Boos</p>
+          <p class="producto-precio">$508.000</p>
+        </div>
+        <a href="{{ url_for('detalle_producto')}}"><button  class="ver-producto-btn">Ver Producto</button></a>
+      </div>
+      <div class="producto-card">
+        <img src="{{ url_for('static', filename='img/camisatomy.jpg') }}">
+        <div class="producto-info">
+          <p>Camisa Tommy</p>
+          <p class="producto-precio">$250.000</p>
+        </div>
+        <a href="{{ url_for('detalle_producto')}}"><button  class="ver-producto-btn">Ver Producto</button></a>
+      </div>
+      <div class="producto-card">
+        <img src="{{ url_for('static', filename='img/camisagucci.avif') }}">
+        <div class="producto-info">
+          <p>Camisa Gucci</p>
+          <p class="producto-precio">$299.000</p>
+        </div>
+        <a href="{{ url_for('detalle_producto')}}"><button  class="ver-producto-btn">Ver Producto</button></a>
+      </div>
+     
+
+{% endblock %}

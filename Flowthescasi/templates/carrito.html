@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detalle_producto.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/carrito.css') }}">
+
+</head>
+<body>
+    <div class="superior">
+        <div class="logo">
+            <h1>Flowthes</h1>
+        </div>
+        <nav>
+            <a href="#">Estado de Envios</a>
+            <a href="{{ url_for('home')}}">Regresar</a>
+           
+        </nav>
+    </div>
+    <div class="container">
+        <!-- Sección de productos en el carrito -->
+        <div class="productos">
+            <div class="producto">
+                <img src="{{ url_for('static', filename='img/camisabudberry.jpg') }}" alt="Camisa Burberry">
+                <div class="info-producto">
+                    <p class="precio">$308.000</p>
+                    <p><strong>Nombre de la Prenda:</strong> Camisa Budberry</p>
+                    <p><strong>Color:</strong> Negro, blanco,rojo,beige</p>
+                </div>
+            </div>
+
+
+        <!-- Resumen del pedido -->
+        <div class="resumen-pedido">
+            <h3>Resumen del Pedido</h3>
+            <p><strong>Total de los Artículos:</strong> 1 artículos</p>
+            <p><strong>Total de Prendas:</strong> $308.000</p>
+            <p class="total-compra"><strong>Total de Compra:</strong> $308.000</p>
+            <a href="{{ url_for('realizacion')}}"><button  class="ver-producto-btn">Hacer Pedido</button></a>
+        </div>
+    </div>
+</body>
+</html>

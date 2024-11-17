@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    align-items: flex-start;
+    background-color: #f8f8f8;
+}
+
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.productos {
+    width: 70%;
+    margin-right: 20px;
+}
+
+.producto {
+    display: flex;
+    border: 2px solid;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.producto:nth-child(odd) {
+    border-color: #00c853;
+}
+
+.producto:nth-child(even) {
+    border-color: #2962ff;
+}
+
+.imagen-producto {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.info-producto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.precio {
+    color: #00c853;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.resumen-pedido {
+    width: 45%;
+    border: 3px solid #7b1fa2;
+    border-radius: 10px;
+    padding: 20px;
+    height: fit-content;
+    right: 0;
+}
+
+.resumen-pedido h3 {
+    border-bottom: 2px dotted #7b1fa2;
+    padding-bottom: 10px;
+}
+
+.resumen-pedido p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.total-compra {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.boton-pedido {
+    background-color: #7b1fa2;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+
+.superior {
+    background-color: #8a4aad;
+    padding: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 97%;
+  }
+  
+.superior .logo h1 {
+    color: white;
+    margin: 0;
+  }
+  
+.superior nav a {
+    color: white;
+    margin-right: 25px;
+    text-decoration: none;
+  }
+  

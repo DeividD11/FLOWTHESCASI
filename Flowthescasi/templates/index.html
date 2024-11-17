@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Flowthes{% endblock titulo %}
+
+{% block estilos %}<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">{% endblock estilos %}
+
+
+{% block body %}
+<div class="header">
+    <img src="{{ url_for('static', filename='img/logo2.png') }}" alt="Logo de Flowthes" class="logo">
+    <a href="{{ url_for('login') }}">Iniciar Sesión</a>
+</div>
+
+<!-- Contenedor principal -->
+<div class="container">
+    <!-- Imagen de la camisa centrada -->
+
+    
+    <div class="product-image">
+        <img src="{{ url_for('static', filename='img/camisabudberry.jpg') }}" alt="Camisa Budberry">
+    </div>
+
+    <!-- Información del producto -->
+    <div class="product-info">
+        <h2>Información Sobre Nuestros Productos</h2>
+        <p>Para todos los gustos: ¡Descubre nuestra amplia colección de pantalones, camisas, chaquetas, pantalonetas y mucho más!</p>
+        <p>Variedad para todos: ¿Buscas pantalones o camisas? Tenemos el estilo perfecto para ti.</p>
+        <p>Todo lo que necesitas: ¡Renueva tu armario! Desde pantalones hasta camisas, lo encontrarás aquí.</p>
+    </div>
+</div>
+{% endblock body %}

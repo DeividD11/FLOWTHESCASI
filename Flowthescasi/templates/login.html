@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block estilos %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock estilos %}
+
+{% block body %}
+<div class="logo">
+    <img src="{{url_for('static', filename='img/logoVerde.png')}}" alt="" class="imagenLogo">
+</div>
+
+<div class="contenedor">
+    <h3>Inicia Sesión</h3>
+    <form class="form-signin" action="/login" method="POST">
+        {% with messages = get_flashed_messages() %}
+    
+        {% if messages %}
+        <br />
+        {% for message in messages %}
+        <div class="alert alert-primary alert-dismissible" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+    
+        {% endwith %}
+            <label for="username" id="label">Correo</label>
+            <input type="email" id="datos" class="form-control" id="username" name="correo" placeholder="Correo@example.com">
+        
+            <label for="password" id="label">Contraseña</label>
+            <input type="password" id="datos" class="form-control" name="contraseña" placeholder="********">     
+        <div class="centrar">
+            <button class="boton" type="submit">Iniciar</button>
+            <a href="{{ url_for('registro') }}">No tengo cuenta, deseo crear una</a>
+        </div>
+        
+    </form>
+</div>
+{% endblock %}

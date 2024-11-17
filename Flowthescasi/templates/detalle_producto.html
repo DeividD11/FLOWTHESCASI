@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/detalle_producto.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Flowthes</h1>
+        </div>
+        <nav>
+            <a href="#">Estado de envíos</a>
+            <a href="#">Carrito de compras</a>
+            <a href="{{ url_for('home')}}">Regresar</a>
+            <img src="{{ url_for('static', filename='img/avatar.png') }}" alt="Usuario" class="avatar">
+        </nav>
+    </header>
+    
+    <section class="product-detail">
+        <div class="product-image">
+            <img src="{{ url_for('static', filename='img/camisabudberry.jpg') }}" alt="Camisa Burberry">
+        </div>
+        <div class="product-info">
+            <h2>Camisa burberry</h2>
+            <p>Camisa de algodón, color original, talla</p>
+            <p class="price">308.000</p>
+            <div class="quantity">
+                <input type="number" value="1" min="1" max="20" id="quantity">
+            </div>
+            <p class="total-price">Valor total = <span id="total">308.000</span></p>
+            <a href="{{ url_for('carrito')}}"><button  class="ver-producto-btn">Añadir al Carrito</button></a>
+        </div>
+    </section>
+    <section class="reviews">
+        <h2>Reseñas</h2>
+        <div class="review-text">¡buena calidad de la prenda me gusto bastante!</div> <!-- Puedes agregar el texto de la reseña aquí -->
+        <div class="review-stars">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+        </div>
+    </section>
+    <section class="reviews">
+       
+        <div class="review-text">¡la calidad es buena y cumple con la expectativa de la imagen y los materiales si son del algodon como 
+            lo dice la descripcion !</div> <!-- Puedes agregar el texto de la reseña aquí -->
+        <div class="review-stars">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+        </div>
+    </section>
+
+    <section class="product-detail">
+        <div class="product-image">
+            <img src="{{ url_for('static', filename='img/camisaboss.jpg') }}" alt="Camisa Boss">
+        </div>
+        <div class="product-info">
+            <h2>Camisa Boss</h2>
+            <p>Camisa de algodón, color original, talla</p>
+            <p class="price">308.000</p>
+            <div class="quantity">
+                <input type="number" value="1" min="1" max="20" id="quantity">
+            </div>
+            <p class="total-price">Valor total = <span id="total">308.000</span></p>
+            <button id="add-to-cart">Añadir al carrito</button>
+        </div>
+    </section>
+    <section class="reviews">
+        <h2>Reseñas</h2>
+        <div class="review-text">¡buena calidad de la prenda me gusto bastante!</div> <!-- Puedes agregar el texto de la reseña aquí -->
+        <div class="review-stars">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+        </div>
+    </section>
+    <section class="reviews">
+       
+        <div class="review-text">¡la calidad es buena y cumple con la expectativa de la imagen y los materiales si son del algodon como 
+            lo dice la descripcion !</div> <!-- Puedes agregar el texto de la reseña aquí -->
+        <div class="review-stars">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+        </div>
+    </section>
+
+    <script>
+        const quantityInput = document.getElementById('quantity');
+        const totalPriceElement = document.getElementById('total');
+        const pricePerUnit = 308000;
+
+        quantityInput.addEventListener('input', function() {
+            const quantity = quantityInput.value;
+            const totalPrice = quantity * pricePerUnit;
+            totalPriceElement.textContent = totalPrice.toLocaleString();
+        });
+    </script>
+</body>
+</html>

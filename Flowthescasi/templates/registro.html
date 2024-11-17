@@ -1,0 +1,42 @@
+
+
+{% extends "base.html" %}
+
+{% block titulo %}
+Registro
+{% endblock titulo %}
+
+{% block estilos %}
+<link rel="stylesheet" href={{url_for('static', filename='css/registro.css')}}>
+{% endblock estilos %}
+
+{% block body %}
+<div class="logo">
+    <img src="{{url_for('static', filename='img/logoVerde.png')}}" alt="" class="imagenLogo">
+</div>
+
+<div class="contenedor">
+    <h3>Registro</h3>
+    <form action="/Datos" method="post" class="formulario">
+        <label id="label">Nombres:</label>
+        <input type="text" name="nombres" placeholder="Nombres" id="datos" class="name">
+        <label id="label">Apellidos:</label>
+        <input type="text" name="apellidos" placeholder="Apellidos" id="datos" class="lastname">
+        <label id="label">Tipo de documento:</label>
+        <select name="tipoDocumento" id="datos" class="documentType">
+            <option value="C.C">Cédula de Ciudadanía</option>
+            <option value="C.E">Cédula de Extranjería</option>
+            <option value="T.I">Tarjeta de Identidad</option>
+        </select>
+        <label id="label">N° Documento:</label>
+        <input type="text" name="N°Documento" placeholder="N° Documento" id="datos" class="documentNumber">
+        <label id="label">Fecha de Nacimiento:</label>
+        <input type="date" name="fechaNacimiento" placeholder="Fecha de Nacimiento" id="datos" class="dateOfBirth">
+        <label id="label">Correo:</label>
+        <input type="email" name="correo" placeholder="Correo" id="datos" class="email">
+        <label id="label">Contraseña:</label>
+        <input type="password" name="contraseña" placeholder="Contraseña" id="datos" class="password"> 
+        <button type="submit" name="enviar" id="" class="boton">Registrarse</button>
+    </form>
+</div>
+{% endblock body %}

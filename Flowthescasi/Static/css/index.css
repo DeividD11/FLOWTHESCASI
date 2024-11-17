@@ -1,0 +1,90 @@
+* {
+    font-family: poppins;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Encabezado */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #9B4FB1;
+    padding: 1px;
+  }
+  
+  .header .logo {
+    width: 100px;
+  }
+  
+  .header a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin-right: 20px;
+    padding: 10px 20px;
+    background-color: transparent;
+    transition: background-color 0.3s;
+  }
+  
+  .header a:hover {
+    color: #ffffff;
+  }
+  
+  /* Contenedor principal */
+  .container {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  /* Contenedor de imagen y texto con separador */
+  .content-wrapper {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    position: relative; /* Agrega posición relativa para poder posicionar la línea */
+  }
+  
+  .product-image {
+    flex: 1.3;
+    text-align: center;
+    padding-right: 20px; /* Espacio entre la imagen y la línea verde */
+  }
+  
+  .product-image img {
+    width: 490px;
+    border: 3px solid #9B4FB1;
+    border-radius: 8px;
+    padding: 100px; /* Espacio dentro del borde */
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  
+  .separator {
+    position: absolute; /* Posiciona la línea absolutamente */
+    right: 0; /* Alinea la línea a la derecha */
+    top: 0;
+    bottom: 0;
+    width: 2px; /* Ajusta el ancho de la línea según tus necesidades */
+    background-color: rgb(3, 58, 3);
+  }
+  
+  .product-info {
+    flex: 1;
+    padding: 60px;
+    text-align: left;
+  }
+  
+  .product-info h2 {
+    font-size: 30px;
+    color: #333;
+  }
+  
+  .product-info p {
+    font-size: 20px;
+    color: #555;
+    margin-bottom: 10px;
+  }

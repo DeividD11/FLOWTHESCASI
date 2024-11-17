@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/factura.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // Función para cargar la fecha actual en el campo de fecha
+        window.onload = function() {
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0'); // Enero es 0
+            let yyyy = today.getFullYear();
+            today = dd + '/' + mm + '/' + yyyy;
+            document.getElementById('date').value = today;
+        }
+    </script>
+    <style>
+        /* Estilo para mover la fecha a la derecha */
+        .date-section {
+            text-align: right;
+            margin-right: 20px; /* Ajusta el margen para dar espacio desde el borde derecho */
+        }
+
+        .date-section input {
+            text-align: center;
+            width: 150px;
+        }
+
+        /* Estilo para mover el total a la izquierda */
+        .total-section {
+            margin-left: 20px; /* Ajusta este margen según la cantidad de espacio que quieras a la izquierda */
+            display: flex;
+            align-items: center;
+        }
+
+        .total-section label {
+            margin-right: 10px; /* Ajusta el espacio entre el texto 'Total' y el campo */
+        }
+
+        .total-section input {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Flowthes</h1>
+        </div>
+        <h2>Factura</h2>
+        <div class="profile">
+            <a href="{{ url_for('carrito')}}"><button  class="ver-producto-btn">Añadir al Carrito</button></a>
+        </div>
+    </header>
+
+    <div class="container" id="invoice">
+        <section class="invoice">
+            <div class="invoice-header">
+                <div class="logo-section">
+                    <img src="{{ url_for('static', filename='img/logo2.png') }}" alt="Logo de Flowthes" class="invoice-logo">
+                    <div class="invoice-info">
+                        <h2>FLOWTHES</h2>
+                        <p>📧 flowthesofficial@gmail.com</p>
+                        <p>🌐 www.flowthes.com</p>
+                        <p>📞 (+57) 3219443533</p>
+                    </div>
+                </div>
+                <div class="date-section">
+                    <label for="date">Fecha:</label>
+                    <input type="text" id="date" placeholder="dd/mm/aaaa" readonly>
+                </div>
+            </div>
+
+            <div class="customer-info">
+                <p>Señor/a: _______________________</p>
+                <p>Teléfono: _______________________</p>
+                <p>Dirección: ______________________</p>
+                <p>Barrio: _________________________</p>
+            </div>
+
+                        
+            <section class="invoice">
+            <div class="invoice-header">
+
+                </div>
+
+            </section>
+
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Cantidad</th>
+                        <th>Descripción</th>
+                        <th>Prenda</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="total-section">
+                <label for="total">Total: $</label>
+                <input type="text" id="total" placeholder="Total">
+            </div>
+
+
+            <div class="actions">
+                <button>📥 Descargar</button>
+                <button onclick="generarPDF()">🖨️ Imprimir</button>
+            </div>
+        </section>  
+    </div>
+
+    <script>
+        function generarPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Obtener el contenido de la factura
+            const contenido = document.getElementById('invoice').innerHTML;
+
+            // Convertir HTML a PDF
+            doc.fromHTML(contenido, 15, 15, {
+                'width': 170,
+            });
+
+            // Guardar el archivo PDF
+            doc.save('factura.pdf');
+        }
+    </script>
+</body>
+</html>
