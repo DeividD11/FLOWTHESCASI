@@ -1,8 +1,10 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import MySQLdb
+from MySQLdb import IntegrityError
 
 # Models:
 from models.ModelUser import ModelUser
@@ -12,18 +14,20 @@ from models.entities.User import User
 
 app = Flask(__name__)
 
-# Configuración de la base de datos
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'Flowthes'
+# Configuración de la base de datos con variables de entorno
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST', 'localhost')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER', 'root')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD', '')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB', 'Flowthes')
 
-# Clave secreta
-app.secret_key = 'mysecretkey'
+# Clave secreta con variable de entorno para mayor seguridad
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'defaultsecretkey')
 
 mysql = MySQL(app)
 
+# Configuración de Flask-Login
 login_manager_app = LoginManager(app)
+login_manager_app.login_view = 'login'  # Redirigir a la página de login si no está autenticado
 
 @login_manager_app.user_loader
 def load_user(id):
@@ -48,12 +52,10 @@ def login():
                 return redirect(url_for('home'))
             else:
                 flash('Contraseña incorrecta')
-                return render_template('login.html')
         else:
             flash('Usuario o Contraseña no encontrados')
-            return render_template('login.html')
-    else:
-        return render_template('login.html')
+
+    return render_template('login.html')
 
 @app.route('/logout')
 def logout():
@@ -61,6 +63,7 @@ def logout():
     return redirect(url_for('inicio'))
 
 @app.route('/home')
+@login_required
 def home():
     return render_template('home.html')
 
@@ -112,6 +115,9 @@ def registro():
                             (numDoc, nombre, apellido, tipoDoc, fechaNacimiento, correo, hashed_password))
                 mysql.connection.commit()
             flash('Usuario registrado correctamente')
+        except IntegrityError as e:
+            mysql.connection.rollback()
+            flash('Error de integridad: clave duplicada o datos incorrectos.')
         except MySQLdb.Error as e:
             mysql.connection.rollback()
             flash(f'Error de base de datos: {e}')
@@ -125,14 +131,14 @@ def registro():
 
 def validar_producto(nombre, unidades, precio, talla, cantidad_minima, clasificacion):
     if not all([nombre, unidades, precio, talla, cantidad_minima, clasificacion]):
-        return False
+        return False, 'Todos los campos son obligatorios'
     try:
         unidades = int(unidades)
         precio = float(precio)
         cantidad_minima = int(cantidad_minima)
-        return True
+        return True, ''
     except ValueError:
-        return False
+        return False, 'Las unidades, precio y cantidad mínima deben ser números válidos'
 
 @app.route('/producto')
 def registrar_producto():
@@ -148,8 +154,9 @@ def guardar_producto():
         cantidad_minima = request.form.get('cantidad_minima')
         clasificacion = request.form.get('clasificacion')
 
-        if not validar_producto(nombre, unidades, precio, talla, cantidad_minima, clasificacion):
-            flash('Todos los campos son obligatorios y deben ser válidos')
+        is_valid, error_message = validar_producto(nombre, unidades, precio, talla, cantidad_minima, clasificacion)
+        if not is_valid:
+            flash(error_message)
             return redirect(url_for('registrar_producto'))
 
         try:
